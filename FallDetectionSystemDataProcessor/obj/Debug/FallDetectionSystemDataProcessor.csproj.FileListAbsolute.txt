@@ -1,0 +1,6 @@
+c:\users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\FallDetectionSystemDataProcessor.exe.config
+c:\users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\FallDetectionSystemDataProcessor.exe
+c:\users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\FallDetectionSystemDataProcessor.pdb
+c:\users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\obj\Debug\FallDetectionSystemDataProcessor.csprojResolveAssemblyReference.cache
+c:\users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\obj\Debug\FallDetectionSystemDataProcessor.exe
+c:\users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\obj\Debug\FallDetectionSystemDataProcessor.pdb
