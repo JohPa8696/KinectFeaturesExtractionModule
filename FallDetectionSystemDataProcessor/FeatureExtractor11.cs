@@ -9,7 +9,7 @@ namespace FallDetectionSystemDataProcessor
 {
     class FeatureExtractor11 : IRawDataExtractor
     {
-        private string columns = "Head_Y_Vel";
+        private string columns = "Head_Y_Vel,Class";
         public static int ID = 11;
 
         public string getColumns()
@@ -86,7 +86,7 @@ namespace FallDetectionSystemDataProcessor
 
         public int getID()
         {
-            throw new NotImplementedException();
+            return 11;
         }
 
         public string getColumns(int windowSize)
