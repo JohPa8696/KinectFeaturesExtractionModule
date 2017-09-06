@@ -14,7 +14,7 @@ namespace FallDetectionSystemDataProcessor
         {
             // Directory contians all raw data files FOR TRAINING
             string baseDir = "C:/Users/johnn/Desktop/";
-            string trainDir =baseDir + "TrainingData/Train";
+            string trainDir = baseDir + "TrainingData/Train";
             string testDir = baseDir + "TrainingData/TestDataSet";
             //string resDir = baseDir + "TrainingData/TestDataSet/ResultDatasets/";
             // Get files in the directory
@@ -115,12 +115,12 @@ namespace FallDetectionSystemDataProcessor
                     // which coses wrong format exception when being converted
                     for (int i = 0; i < numbers.Length; i++)
                     {
-                        if (numbers[i].Contains("0-"))
+                        if (numbers[i].Contains("0-")|| numbers[i].Contains("1-"))
                         {
                             numbers[i] = numbers[i].Remove(0, 1);
-                        }else if (numbers[i].Contains("1-"))
+                        }else if (Convert.ToDouble(numbers[i]) >=10 && i <64 && numbers[66]=="1")
                         {
-                            numbers[i] = (Convert.ToDouble(numbers[i].Remove(0, 1)) +1.0).ToString();
+                            numbers[i] = (Convert.ToDouble(numbers[i]) -10.0).ToString();
                         }
                     }
                     // Convert string to an array of double 
