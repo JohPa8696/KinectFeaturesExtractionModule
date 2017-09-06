@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FeatureExtractor4.cs" />
     <Compile Include="FeatureExtractor1.cs" />
     <Compile Include="FeatureExtractor2.cs" />
     <Compile Include="FeatureExtractor3.cs" />

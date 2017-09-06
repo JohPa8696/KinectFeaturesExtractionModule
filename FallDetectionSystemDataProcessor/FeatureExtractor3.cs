@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace FallDetectionSystemDataProcessor
 {
+
+    // Head velocity all in 1 feature vectors
     class FeatureExtractor3 : IRawDataExtractor
     {
         private string columns5 = "Head_Vel_Y_1,Head_Vel_Y_2,Head_Vel_Y_3,Head_Vel_Y_4,Head_Vel_Y_5,Class";
