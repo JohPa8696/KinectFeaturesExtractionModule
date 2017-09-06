@@ -12,6 +12,8 @@ namespace FallDetectionSystemDataProcessor
     {
 
         private string columns = "Head_X,Head_Y,HipCenter_Y,HipCenter_Vel_Y_,Spine_X,Spine_Y,Box_W, Box_H,Box_D,Box_Delta_W,Box_Delta_H,Box_Delta_D,Class";
+        public string[] cols = { "Head_X", "Head_Y", "HipCenter_Y", "HipCenter_Vel_Y_", "Spine_X", "Spine_Y", "Box_W", "Box_H", "Box_D", "Box_Delta_W", "Box_Delta_H", "Box_Delta_D"};
+        public static int ID = 1;
 
         public string[] process(List<double[]> data)
         {
@@ -153,10 +155,14 @@ namespace FallDetectionSystemDataProcessor
             return res;
         }
 
-
         public string getColumns()
         {
             return this.columns;
+        }
+
+        public int getID()
+        {
+            return 1;
         }
     }
 }

@@ -10,15 +10,17 @@ namespace FallDetectionSystemDataProcessor
 {
     class Program
     {
+        public static int AMOUNT_OF_WINDOWS = 5;
+
         static void Main(string[] args)
         {
             // Directory contians all raw data files FOR TRAINING
-            string baseDir = "C:/Users/johnn/Desktop/";
-            string trainDir =baseDir + "TrainingData/Train";
+            string baseDir = "C:/Users/n/Desktop/";
+            string trainDir = baseDir + "TrainingData/Train";
             string testDir = baseDir + "TrainingData/TestDataSet";
             //string resDir = baseDir + "TrainingData/TestDataSet/ResultDatasets/";
             // Get files in the directory
-            string[] trainingFileEntries  = Directory.GetFiles(trainDir);
+            string[] trainingFileEntries = Directory.GetFiles(trainDir);
             string[] testFileEntries = Directory.GetFiles(testDir);
 
             ArrayList featuresExtractors = new ArrayList();
@@ -26,13 +28,15 @@ namespace FallDetectionSystemDataProcessor
             //featuresExtractors.Add(new FeatureExtractor2());
             //featuresExtractors.Add(new FeatureExtractor3());
 
+
+
             foreach (IRawDataExtractor extractor in featuresExtractors)
             {
 
                 List<StringBuilder> trainingBuilders = new List<StringBuilder>();
                 List<StringBuilder> testBuilders = new List<StringBuilder>();
                 // Need 5 stringbuilders for both training and test because of 5 differnt window size 5,10,15,20,25.
-                for(int i =0; i<5; i++)
+                for (int i = 0; i < 5; i++)
                 {
                     trainingBuilders.Add(new StringBuilder());
                     trainingBuilders[i].AppendLine(extractor.getColumns());
@@ -50,19 +54,30 @@ namespace FallDetectionSystemDataProcessor
                         trainingBuilders[i].Append(res[i]);
                     }
                 }
-                // Write the result to a csv file
-                for(int i =5; i<30; i += 5)
+
+                //create folder for files
+                int folderIndex = 1;
+                string newFolder = Directory.GetCurrentDirectory() + "/FeatureExtractor_" + extractor.getID();
+                while (Directory.Exists(newFolder))
                 {
-                    string trainingsetPath = Directory.GetCurrentDirectory() + "/trainingset"+i+".csv";
-                    int counter = 0;
-                    while (File.Exists(trainingsetPath))
-                    {
-                        trainingsetPath = Directory.GetCurrentDirectory() + "/trainingset" + i + "_" + counter + ".csv";
-                        counter++;
-                    }
+                    newFolder = Directory.GetCurrentDirectory() + "/FeatureExtractor_" + extractor.getID() + "_" + folderIndex;
+                    folderIndex++;
+                }
+
+                Directory.CreateDirectory(newFolder);
+                Directory.CreateDirectory(newFolder + "/5");
+                Directory.CreateDirectory(newFolder + "/10");
+                Directory.CreateDirectory(newFolder + "/15");
+                Directory.CreateDirectory(newFolder + "/20");
+                Directory.CreateDirectory(newFolder + "/25");
+
+                // Write the result to a csv file
+                for (int i = 5; i < 30; i += 5)
+                {
+                    string trainingsetPath = newFolder + "/" + i + "/trainingset" + i + ".csv";
                     // write data to file
-                    File.AppendAllText(trainingsetPath, trainingBuilders[i/5 -1].ToString());
-                    trainingBuilders[i/5 -1].Clear();
+                    File.AppendAllText(trainingsetPath, trainingBuilders[i / 5 - 1].ToString());
+                    trainingBuilders[i / 5 - 1].Clear();
                 }
 
                 // Loop thru all test datasets
@@ -80,25 +95,93 @@ namespace FallDetectionSystemDataProcessor
                 // test set
                 for (int i = 5; i < 30; i += 5)
                 {
-                    string testsetPath = Directory.GetCurrentDirectory() + "/testset" + i + ".csv";
-                    int counter = 0;
-                    while (File.Exists(testsetPath))
-                    {
-                        testsetPath = Directory.GetCurrentDirectory() + "/testset" + i + "_" + counter + ".csv";
-                        counter++;
-                    }
-                    // write data to file
-                    File.AppendAllText(testsetPath, testBuilders[i/5 -1].ToString());
-                    testBuilders[i/5 -1 ].Clear();
+                    string testsetPath = newFolder + "/" + i + "/testset" + i + ".csv";
+                    File.AppendAllText(testsetPath, testBuilders[i / 5 - 1].ToString());
+                    testBuilders[i / 5 - 1].Clear();
                 }
 
+                for (int i = 5; i < 30; i += 5)
+                {
+                    string folder = newFolder + "/" + i;
+                    SVMEvaluator svm = null;
+                    SVMEvaluator test = null;
+
+                    foreach (string filename in Directory.GetFiles(folder))
+                    {
+                        if (filename.Contains("train"))
+                        {
+                            svm = new SVMEvaluator(filename);
+                            svm.buildModel();
+                        }
+                        else
+                        {
+                            test = new SVMEvaluator(filename);
+                            //Console.Write(test.outputs);
+                        }
+                    }
+                    bool[] results = svm.classify(test.inputs);
+                    StringBuilder output = new StringBuilder();
+                    output.AppendLine("Actual,Classified As");
+
+
+                    int noFallTP = 0;
+                    int noFallFP = 0;
+                    int fallTP = 0;
+                    int fallFP = 0;
+                    int count = 0;
+                    foreach (int j in test.outputs)
+                    {
+                        if (results[count])
+                        {
+                            if (j == ToInt(results[count])) // fall TP
+                            {
+                                fallTP++;
+                            }
+                            else // fall FP
+                            {
+                                fallFP++;
+                            }
+                        }
+                        else
+                        {
+                            if (j == ToInt(results[count])) // nofall TP
+                            {
+                                noFallTP++;
+                            }
+                            else // nofall FP
+                            {
+                                noFallFP++;
+                            }
+                        }
+                        output.AppendLine(j + "," + ToInt(results[count]));
+                        count++;
+                    }
+                    string outputPath = newFolder + "/" + i + "/output" + i + ".csv";
+                    File.AppendAllText(outputPath, output.ToString());
+
+                    StringBuilder summary = new StringBuilder();
+                    summary.AppendLine("Summary results");
+                    summary.AppendLine("Fall, No Fall,<-Classified As");
+                    summary.AppendLine(fallTP + "," + noFallFP + ",Fall=Fall");
+                    summary.AppendLine(fallFP + "," + noFallTP + ",No Fall=No Fall");
+
+                    string summaryPath = newFolder + "/" + i + "/summary" + i + ".csv";
+                    File.AppendAllText(summaryPath, summary.ToString());
+                }
+
+
             }
+
+
+
+            if (System.Diagnostics.Debugger.IsAttached) Console.ReadLine();
         }
 
 
         // Return an array of datarow in a file
         private static List<double[]> getData(string filePath)
         {
+            Console.WriteLine(filePath);
             // ArrayList contains all 30 rows of data in the file
             List<double[]> data = new List<double[]>();
             foreach (string line in File.ReadLines(filePath, Encoding.UTF8))
@@ -118,9 +201,10 @@ namespace FallDetectionSystemDataProcessor
                         if (numbers[i].Contains("0-"))
                         {
                             numbers[i] = numbers[i].Remove(0, 1);
-                        }else if (numbers[i].Contains("1-"))
+                        }
+                        else if (numbers[i].Contains("1-"))
                         {
-                            numbers[i] = (Convert.ToDouble(numbers[i].Remove(0, 1)) +1.0).ToString();
+                            numbers[i] = (Convert.ToDouble(numbers[i].Remove(0, 1)) + 1.0).ToString();
                         }
                     }
                     // Convert string to an array of double 
@@ -129,6 +213,11 @@ namespace FallDetectionSystemDataProcessor
                 }
             }
             return data;
+        }
+
+        public static int ToInt(bool value)
+        {
+            return value ? 1 : 0;
         }
 
     }

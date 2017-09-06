@@ -18,5 +18,10 @@ namespace FallDetectionSystemDataProcessor
         {
             return null;
         }
+
+        public int getID()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
