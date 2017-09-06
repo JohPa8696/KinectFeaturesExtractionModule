@@ -15,6 +15,7 @@ namespace FallDetectionSystemDataProcessor
         static void Main(string[] args)
         {
             // Directory contians all raw data files FOR TRAINING
+
             string baseDir = "C:/Users/n/Desktop/";
             string trainDir = baseDir + "TrainingData/Train";
             string testDir = baseDir + "TrainingData/TestDataSet";
@@ -24,8 +25,8 @@ namespace FallDetectionSystemDataProcessor
             string[] testFileEntries = Directory.GetFiles(testDir);
 
             ArrayList featuresExtractors = new ArrayList();
-            featuresExtractors.Add(new FeatureExtractor1());
-            //featuresExtractors.Add(new FeatureExtractor2());
+            //featuresExtractors.Add(new FeatureExtractor1());
+            featuresExtractors.Add(new FeatureExtractor2());
             //featuresExtractors.Add(new FeatureExtractor3());
 
 
@@ -39,9 +40,9 @@ namespace FallDetectionSystemDataProcessor
                 for (int i = 0; i < 5; i++)
                 {
                     trainingBuilders.Add(new StringBuilder());
-                    trainingBuilders[i].AppendLine(extractor.getColumns());
+                    trainingBuilders[i].AppendLine(extractor.getColumns(i));
                     testBuilders.Add(new StringBuilder());
-                    testBuilders[i].AppendLine(extractor.getColumns());
+                    testBuilders[i].AppendLine(extractor.getColumns(i));
                 }
                 // Loop thru all training datasets
                 foreach (string filename in trainingFileEntries)
@@ -75,6 +76,7 @@ namespace FallDetectionSystemDataProcessor
                 for (int i = 5; i < 30; i += 5)
                 {
                     string trainingsetPath = newFolder + "/" + i + "/trainingset" + i + ".csv";
+
                     // write data to file
                     File.AppendAllText(trainingsetPath, trainingBuilders[i / 5 - 1].ToString());
                     trainingBuilders[i / 5 - 1].Clear();
@@ -159,8 +161,13 @@ namespace FallDetectionSystemDataProcessor
                     string outputPath = newFolder + "/" + i + "/output" + i + ".csv";
                     File.AppendAllText(outputPath, output.ToString());
 
+                    double correctly_classified = (double)(fallTP + noFallTP) / (double)(noFallTP + noFallFP + fallTP + fallFP);
+                    double incorrectly_classified = (double)(fallFP + noFallFP) / (double)(noFallTP + noFallFP + fallTP + fallFP);
+
                     StringBuilder summary = new StringBuilder();
                     summary.AppendLine("Summary results");
+                    summary.AppendLine("Correctly classified:," + correctly_classified);
+                    summary.AppendLine("Incorrectly classified:," + incorrectly_classified);
                     summary.AppendLine("Fall, No Fall,<-Classified As");
                     summary.AppendLine(fallTP + "," + noFallFP + ",Fall=Fall");
                     summary.AppendLine(fallFP + "," + noFallTP + ",No Fall=No Fall");
@@ -198,13 +205,14 @@ namespace FallDetectionSystemDataProcessor
                     // which coses wrong format exception when being converted
                     for (int i = 0; i < numbers.Length; i++)
                     {
-                        if (numbers[i].Contains("0-"))
+                        if (numbers[i].Contains("0-")|| numbers[i].Contains("1-"))
                         {
                             numbers[i] = numbers[i].Remove(0, 1);
+
                         }
-                        else if (numbers[i].Contains("1-"))
+                        else if (Convert.ToDouble(numbers[i]) >=10 && i <64 && numbers[66]=="1")
                         {
-                            numbers[i] = (Convert.ToDouble(numbers[i].Remove(0, 1)) + 1.0).ToString();
+                            numbers[i] = (Convert.ToDouble(numbers[i]) -10.0).ToString();
                         }
                     }
                     // Convert string to an array of double 

@@ -10,9 +10,7 @@ namespace FallDetectionSystemDataProcessor
     // This is extractor return a dataset with the exact features in 'book1'
     class FeatureExtractor1 : IRawDataExtractor
     {
-
-        private string columns = "Head_X,Head_Y,HipCenter_Y,HipCenter_Vel_Y_,Spine_X,Spine_Y,Box_W, Box_H,Box_D,Box_Delta_W,Box_Delta_H,Box_Delta_D,Class";
-        public string[] cols = { "Head_X", "Head_Y", "HipCenter_Y", "HipCenter_Vel_Y_", "Spine_X", "Spine_Y", "Box_W", "Box_H", "Box_D", "Box_Delta_W", "Box_Delta_H", "Box_Delta_D"};
+        private string columns = "Head_Y,Head_Vel_Y,HipCenter_Y,HipCenter_Vel_Y_,Spine_X,Spine_Y,Spine_Z,Box_W, Box_H,Box_D,Box_Delta_W,Box_Delta_H,Box_Delta_D,Class";
         public static int ID = 1;
 
         public string[] process(List<double[]> data)
@@ -84,16 +82,18 @@ namespace FallDetectionSystemDataProcessor
 
                 double timeDiff = (currentRow[64] - previousRow[64]);
 
-                featureValues.Add(currentRow[0]); // HEAD X 
                 featureValues.Add(currentRow[1]); // HEAD Y
+               
+                featureValues.Add((currentRow[1] - previousRow[1])/timeDiff); // HEAD Vel Y
 
                 // Calculate the hipcenter veldelta
                 featureValues.Add(currentRow[28]); // hipcenter Y
                 double hcvel = (currentRow[28] - previousRow[28]) / timeDiff;
                 featureValues.Add(hcvel); // hip center vel y
 
-                featureValues.Add(currentRow[51]); // Spine X 
-                featureValues.Add(currentRow[52]); // Spine Y
+                featureValues.Add(currentRow[51] * 100); // Spine X 
+                featureValues.Add(currentRow[52] * 100); // Spine Y
+                featureValues.Add(currentRow[53] * 100); // Spine Z
 
                 featureValues.Add(boxW); // box width
                 featureValues.Add(boxH); // box height
@@ -116,6 +116,7 @@ namespace FallDetectionSystemDataProcessor
                 }
                 // remove the last comma
                 s.Remove(s.Length - 1, 1);
+                previousRow = currentRow;
                 extractedData.Add(s);
             }
 
@@ -130,23 +131,23 @@ namespace FallDetectionSystemDataProcessor
             StringBuilder builder25 = new StringBuilder();
             for (int i=2; i< extractedData.Count; i++)
             {
-                if(i>=2 && i <= 27)
+                if (i >= 2 && i < 27)
                 {
                     builder25.AppendLine(extractedData[i]);
                 }
-                if (i >= 4 && i <= 24)
+                if (i >= 4 && i < 24)
                 {
                     builder20.AppendLine(extractedData[i]);
                 }
-                if (i >= 6 && i <= 21)
+                if (i >= 6 && i < 21)
                 {
                     builder15.AppendLine(extractedData[i]);
                 }
-                if (i >= 9 && i <= 19)
+                if (i >= 9 && i < 19)
                 {
                     builder10.AppendLine(extractedData[i]);
                 }
-                if (i >= 12 && i <= 17)
+                if (i >= 12 && i < 17)
                 {
                     builder5.AppendLine(extractedData[i]);
                 }
@@ -155,7 +156,8 @@ namespace FallDetectionSystemDataProcessor
             return res;
         }
 
-        public string getColumns()
+
+        public string getColumns(int windowSize)
         {
             return this.columns;
         }
