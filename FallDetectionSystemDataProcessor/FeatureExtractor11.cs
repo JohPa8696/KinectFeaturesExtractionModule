@@ -54,23 +54,23 @@ namespace FallDetectionSystemDataProcessor
             StringBuilder builder25 = new StringBuilder();
             for (int i = 2; i < extractedData.Count; i++)
             {
-                if (i >= 2 && i <= 27)
+                if (i >= 2 && i < 27)
                 {
                     builder25.AppendLine(extractedData[i]);
                 }
-                if (i >= 4 && i <= 24)
+                if (i >= 4 && i < 24)
                 {
                     builder20.AppendLine(extractedData[i]);
                 }
-                if (i >= 6 && i <= 21)
+                if (i >= 6 && i < 21)
                 {
                     builder15.AppendLine(extractedData[i]);
                 }
-                if (i >= 9 && i <= 19)
+                if (i >= 9 && i < 19)
                 {
                     builder10.AppendLine(extractedData[i]);
                 }
-                if (i >= 12 && i <= 17)
+                if (i >= 12 && i < 17)
                 {
                     builder5.AppendLine(extractedData[i]);
                 }

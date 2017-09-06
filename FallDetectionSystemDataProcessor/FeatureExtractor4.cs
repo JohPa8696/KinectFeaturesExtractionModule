@@ -14,7 +14,7 @@ namespace FallDetectionSystemDataProcessor
                         "Head_Vel_Y_3,HipCenter_Vel_Y_3,Head2FloorDist_3," +
                         "Head_Vel_Y_4,HipCenter_Vel_Y_4,Head2FloorDist_4," +
                         "Head_Vel_Y_5,HipCenter_Vel_Y_5,Head2FloorDist_5," +
-                        "Head_Vel_Y_6,HipCenter_Vel_Y_6,Head2FloorDist_1,Class";
+                        "Head_Vel_Y_6,HipCenter_Vel_Y_6,Head2FloorDist_6,Class";
         private string columns10 = "Head_Vel_Y_1,HipCenter_Vel_Y_1,Head2FloorDist_1," +
                 "Head_Vel_Y_2,HipCenter_Vel_Y_2,Head2FloorDist_2," +
                 "Head_Vel_Y_3,HipCenter_Vel_Y_3,Head2FloorDist_3,Class";
@@ -69,7 +69,7 @@ namespace FallDetectionSystemDataProcessor
                         double[] currentRow = data[i - 1];
                         double timeDiff = (currentRow[64] - previousRow[64]);
 
-                        double hcvel = (currentRow[28] - previousRow[28]) *100*1000/ timeDiff; // hip center vel
+                        double hcvel = (currentRow[28] - previousRow[28]) * 100 * 1000 / timeDiff; // hip center vel
                         // Calculate the head difference, 5 frame apart
                         double headToFloorDistance = 1.0;
                         if (!(currentRow[60] == 0 && currentRow[61] == 0 && currentRow[62] == 0 && currentRow[63] == 0))
@@ -80,12 +80,12 @@ namespace FallDetectionSystemDataProcessor
                             headToFloorDistance *= 100;
                         }
 
-                       
+
                         if (step == 5)
                         {
                             win5 += (currentRow[1] - previousRow[1]) * 100 * 1000 / timeDiff + ","; // Head Vel 
-                            win5 += hcvel+ ",";
-                            win5 += headToFloorDistance +",";
+                            win5 += hcvel + ",";
+                            win5 += headToFloorDistance + ",";
                         }
                         else if (step == 10)
                         {
@@ -105,7 +105,7 @@ namespace FallDetectionSystemDataProcessor
                             win20 += hcvel + ",";
                             win20 += headToFloorDistance + ",";
                         }
-                            previousRow = currentRow;
+                        previousRow = currentRow;
                     }
                 }
             }
@@ -133,6 +133,11 @@ namespace FallDetectionSystemDataProcessor
             res[3] = builder20.ToString();
             res[4] = builder20.ToString();
             return res;
+        }
+
+        public int getID()
+        {
+            return 4;
         }
     }
 }

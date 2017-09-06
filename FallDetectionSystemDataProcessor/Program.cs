@@ -25,7 +25,14 @@ namespace FallDetectionSystemDataProcessor
             string[] testFileEntries = Directory.GetFiles(testDir);
 
             ArrayList featuresExtractors = new ArrayList();
+            //featuresExtractors.Add(new FeatureExtractor1());
+            //featuresExtractors.Add(new FeatureExtractor2());
+            //featuresExtractors.Add(new FeatureExtractor3());
             featuresExtractors.Add(new FeatureExtractor11());
+            //featuresExtractors.Add(new FeatureExtractor4());
+
+
+
 
             foreach (IRawDataExtractor extractor in featuresExtractors)
             {
@@ -169,7 +176,7 @@ namespace FallDetectionSystemDataProcessor
                         double incorrectly_classified = (double)(fallFP + noFallFP) / (double)(noFallTP + noFallFP + fallTP + fallFP);
 
                         double percisionFall = (double)fallTP / (double)(fallTP + fallFP);
-                        double recallFall = (double)fallTP / (double)(fallTP + noFallTP);
+                        double recallFall = (double)fallTP / (double)(fallTP + noFallFP);
                         double f1_score_fall = 2 * (percisionFall * recallFall) / (percisionFall + recallFall);
 
                         double percisionNoFall = (double)noFallTP / (double)(noFallTP + noFallFP);

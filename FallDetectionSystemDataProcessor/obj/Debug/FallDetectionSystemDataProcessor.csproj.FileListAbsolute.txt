@@ -40,3 +40,26 @@ C:\Users\n\Desktop\Evaluation\FallDetectionSystemDataProcessor\bin\Debug\sv\ZedG
 C:\Users\n\Desktop\Evaluation\FallDetectionSystemDataProcessor\bin\Debug\tr\ZedGraph.resources.dll
 C:\Users\n\Desktop\Evaluation\FallDetectionSystemDataProcessor\bin\Debug\zh-cn\ZedGraph.resources.dll
 C:\Users\n\Desktop\Evaluation\FallDetectionSystemDataProcessor\bin\Debug\zh-tw\ZedGraph.resources.dll
+C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\Accord.dll.config
+C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\Accord.Controls.dll
+C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\Accord.dll
+C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\Accord.IO.dll
+C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\Accord.MachineLearning.dll
+C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\Accord.Math.Core.dll
+C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\Accord.Math.dll
+C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\Accord.Statistics.dll
+C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\ZedGraph.dll
+C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\Accord.xml
+C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\de\ZedGraph.resources.dll
+C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\es\ZedGraph.resources.dll
+C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\fr\ZedGraph.resources.dll
+C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\hu\ZedGraph.resources.dll
+C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\it\ZedGraph.resources.dll
+C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\ja\ZedGraph.resources.dll
+C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\pt\ZedGraph.resources.dll
+C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\ru\ZedGraph.resources.dll
+C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\sk\ZedGraph.resources.dll
+C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\sv\ZedGraph.resources.dll
+C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\tr\ZedGraph.resources.dll
+C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\zh-cn\ZedGraph.resources.dll
+C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\zh-tw\ZedGraph.resources.dll
