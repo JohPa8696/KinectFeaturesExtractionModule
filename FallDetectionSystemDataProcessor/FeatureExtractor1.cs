@@ -11,7 +11,7 @@ namespace FallDetectionSystemDataProcessor
     class FeatureExtractor1 : IRawDataExtractor
     {
 
-        private string columns = "Head_Y,Head_Vel_Y,HipCenter_Y,HipCenter_Vel_Y_,Spine_X,Spine_Y,Box_W, Box_H,Box_D,Box_Delta_W,Box_Delta_H,Box_Delta_D,Class";
+        private string columns = "Head_Y,Head_Vel_Y,HipCenter_Y,HipCenter_Vel_Y_,Spine_X,Spine_Y,Spine_Z,Box_W, Box_H,Box_D,Box_Delta_W,Box_Delta_H,Box_Delta_D,Class";
 
         public string[] process(List<double[]> data)
         {
@@ -91,8 +91,9 @@ namespace FallDetectionSystemDataProcessor
                 double hcvel = (currentRow[28] - previousRow[28]) / timeDiff;
                 featureValues.Add(hcvel); // hip center vel y
 
-                featureValues.Add(currentRow[51]); // Spine X 
-                featureValues.Add(currentRow[52]); // Spine Y
+                featureValues.Add(currentRow[51] * 100); // Spine X 
+                featureValues.Add(currentRow[52] * 100); // Spine Y
+                featureValues.Add(currentRow[53] * 100); // Spine Z
 
                 featureValues.Add(boxW); // box width
                 featureValues.Add(boxH); // box height
@@ -115,6 +116,7 @@ namespace FallDetectionSystemDataProcessor
                 }
                 // remove the last comma
                 s.Remove(s.Length - 1, 1);
+                previousRow = currentRow;
                 extractedData.Add(s);
             }
 
@@ -155,7 +157,7 @@ namespace FallDetectionSystemDataProcessor
         }
 
 
-        public string getColumns()
+        public string getColumns(int windowSize)
         {
             return this.columns;
         }

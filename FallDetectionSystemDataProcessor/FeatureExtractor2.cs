@@ -13,7 +13,7 @@ namespace FallDetectionSystemDataProcessor
     class FeatureExtractor2 : IRawDataExtractor
     {
 
-        private string columns = "Head_Y,Head_Vel_Y,HipCenter_Y,HipCenter_Vel_Y_,Spine_X,Spine_Y,Box_W, Box_H,Box_D,Box_Delta_W,Box_Delta_H,Box_Delta_D, Head_to_Floor_Distance, Class";
+        private string columns = "Head_Y,Head_Vel_Y,HipCenter_Y,HipCenter_Vel_Y_,Spine_X,Spine_Y,Spine_Z,Box_W, Box_H,Box_D,Box_Delta_W,Box_Delta_H,Box_Delta_D, Head_to_Floor_Distance, Class";
 
         public string[] process(List<double[]> data)
         {
@@ -96,24 +96,25 @@ namespace FallDetectionSystemDataProcessor
 
                 featureValues.Add(currentRow[1]*100); // HEAD Y
 
-                featureValues.Add((currentRow[1] - previousRow[1])*100 / timeDiff); // HEAD Vel Y
+                featureValues.Add((currentRow[1] - previousRow[1])*100 *1000 / timeDiff); // HEAD Vel Y
 
                 // Calculate the hipcenter veldelta
                 featureValues.Add(currentRow[28]*100); // hipcenter Y
-                double hcvel = (currentRow[28] - previousRow[28])*100 / timeDiff;
+                double hcvel = (currentRow[28] - previousRow[28])*100 *1000 / timeDiff;
                 featureValues.Add(hcvel); // hip center vel y
 
-                featureValues.Add(currentRow[51]*100); // Spine X 
-                featureValues.Add(currentRow[52] * 100); // Spine Y
+                featureValues.Add(currentRow[51]* 100); // Spine X 
+                featureValues.Add(currentRow[52]* 100); // Spine Y
+                featureValues.Add(currentRow[53]* 100); // Spine Z
 
                 featureValues.Add(boxW * 100); // box width
                 featureValues.Add(boxH * 100); // box height
                 featureValues.Add(boxD * 100); // box depth
 
                 //Calculate box delta
-                double box_delta_w = (boxW - prevBoxW) * 100 / timeDiff;
-                double box_delta_h = (boxH - prevBoxH) * 100 / timeDiff;
-                double box_delta_d = (boxD - prevBoxD) * 100 / timeDiff;
+                double box_delta_w = (boxW - prevBoxW) * 100 *1000/ timeDiff;
+                double box_delta_h = (boxH - prevBoxH) * 100 *1000 / timeDiff;
+                double box_delta_d = (boxD - prevBoxD) * 100 *1000/ timeDiff;
                 featureValues.Add(box_delta_w);  // box delta w
                 featureValues.Add(box_delta_h);  // box delta h
                 featureValues.Add(box_delta_d);  // box delta d
@@ -128,6 +129,7 @@ namespace FallDetectionSystemDataProcessor
                 }
                 // remove the last comma
                 s.Remove(s.Length - 1, 1);
+                previousRow = currentRow;
                 extractedData.Add(s);
             }
 
@@ -167,7 +169,7 @@ namespace FallDetectionSystemDataProcessor
             return res;
         }
 
-        public string getColumns()
+        public string getColumns(int windowSize)
         {
             return this.columns;
         }

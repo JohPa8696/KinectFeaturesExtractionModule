@@ -11,6 +11,6 @@ namespace FallDetectionSystemDataProcessor
     {
 
         string[] process(List<double[]> data);
-        string getColumns();
+        string getColumns(int windowSize);
     }
 }
