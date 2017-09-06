@@ -25,10 +25,9 @@ namespace FallDetectionSystemDataProcessor
             string[] testFileEntries = Directory.GetFiles(testDir);
 
             ArrayList featuresExtractors = new ArrayList();
-            //featuresExtractors.Add(new FeatureExtractor1());
-            //featuresExtractors.Add(new FeatureExtractor2());
-            //featuresExtractors.Add(new FeatureExtractor3());
-            featuresExtractors.Add(new FeatureExtractor4());
+            featuresExtractors.Add(new FeatureExtractor1());
+            featuresExtractors.Add(new FeatureExtractor2());
+            featuresExtractors.Add(new FeatureExtractor3());
 
 
 
@@ -106,78 +105,97 @@ namespace FallDetectionSystemDataProcessor
                 for (int i = 5; i < 30; i += 5)
                 {
                     string folder = newFolder + "/" + i;
-                    SVMEvaluator svm = null;
-                    SVMEvaluator test = null;
-
-                    foreach (string filename in Directory.GetFiles(folder))
-                    {
-                        if (filename.Contains("train"))
-                        {
-                            svm = new SVMEvaluator(filename);
-                            svm.buildModel();
-                        }
-                        else
-                        {
-                            test = new SVMEvaluator(filename);
-                            //Console.Write(test.outputs);
-                        }
-                    }
-                    bool[] results = svm.classify(test.inputs);
-                    StringBuilder output = new StringBuilder();
-                    output.AppendLine("Actual,Classified As");
-
-
-                    int noFallTP = 0;
-                    int noFallFP = 0;
-                    int fallTP = 0;
-                    int fallFP = 0;
-                    int count = 0;
-                    foreach (int j in test.outputs)
-                    {
-                        if (results[count])
-                        {
-                            if (j == ToInt(results[count])) // fall TP
-                            {
-                                fallTP++;
-                            }
-                            else // fall FP
-                            {
-                                fallFP++;
-                            }
-                        }
-                        else
-                        {
-                            if (j == ToInt(results[count])) // nofall TP
-                            {
-                                noFallTP++;
-                            }
-                            else // nofall FP
-                            {
-                                noFallFP++;
-                            }
-                        }
-                        output.AppendLine(j + "," + ToInt(results[count]));
-                        count++;
-                    }
-                    string outputPath = newFolder + "/" + i + "/output" + i + ".csv";
-                    File.AppendAllText(outputPath, output.ToString());
-
-                    double correctly_classified = (double)(fallTP + noFallTP) / (double)(noFallTP + noFallFP + fallTP + fallFP);
-                    double incorrectly_classified = (double)(fallFP + noFallFP) / (double)(noFallTP + noFallFP + fallTP + fallFP);
-
                     StringBuilder summary = new StringBuilder();
                     summary.AppendLine("Summary results");
-                    summary.AppendLine("Correctly classified:," + correctly_classified);
-                    summary.AppendLine("Incorrectly classified:," + incorrectly_classified);
-                    summary.AppendLine("Fall, No Fall,<-Classified As");
-                    summary.AppendLine(fallTP + "," + noFallFP + ",Fall=Fall");
-                    summary.AppendLine(fallFP + "," + noFallTP + ",No Fall=No Fall");
+                    summary.AppendLine("Iteration,Correctly Classified,Incorrectly Classified,Fall Percision,Fall Recall,Fall F1 Score,No Fall Percision,No Fall Recall,No Fall F1 Score");
 
+                    StringBuilder matrix = new StringBuilder();
+
+                    for (int l = 0; l < 10; l++)
+                    {
+                        SVMEvaluator svm = null;
+                        SVMEvaluator test = null;
+
+                        foreach (string filename in Directory.GetFiles(folder))
+                        {
+                            if (filename.Contains("train"))
+                            {
+                                svm = new SVMEvaluator(filename);
+                                svm.buildModel();
+                            }
+                            else if(filename.Contains("test"))
+                            {
+                                test = new SVMEvaluator(filename);
+                                //Console.Write(test.outputs);
+                            }
+                        }
+                        bool[] results = svm.classify(test.inputs);
+
+                        StringBuilder output = new StringBuilder();
+                        output.AppendLine("Actual,Classified As");
+
+                        int noFallTP = 0;
+                        int noFallFP = 0;
+                        int fallTP = 0;
+                        int fallFP = 0;
+                        int count = 0;
+                        foreach (int j in test.outputs)
+                        {
+                            if (results[count])
+                            {
+                                if (j == ToInt(results[count])) // fall TP
+                                {
+                                    fallTP++;
+                                }
+                                else // fall FP
+                                {
+                                    fallFP++;
+                                }
+                            }
+                            else
+                            {
+                                if (j == ToInt(results[count])) // nofall TP
+                                {
+                                    noFallTP++;
+                                }
+                                else // nofall FP
+                                {
+                                    noFallFP++;
+                                }
+                            }
+                            output.AppendLine(j + "," + ToInt(results[count]));
+                            count++;
+                        }
+                        string outputPath = newFolder + "/" + i + "/output" + l + ".csv";
+                        File.AppendAllText(outputPath, output.ToString());
+
+                        double correctly_classified = (double)(fallTP + noFallTP) / (double)(noFallTP + noFallFP + fallTP + fallFP);
+                        double incorrectly_classified = (double)(fallFP + noFallFP) / (double)(noFallTP + noFallFP + fallTP + fallFP);
+
+                        double percisionFall = (double)fallTP / (double)(fallTP + fallFP);
+                        double recallFall = (double)fallTP / (double)(fallTP + noFallTP);
+                        double f1_score_fall = 2 * (percisionFall * recallFall) / (percisionFall + recallFall);
+
+                        double percisionNoFall = (double)noFallTP / (double)(noFallTP + noFallFP);
+                        double recallNoFall = (double)noFallTP / (double)(noFallTP + fallFP);
+                        double f1_score_noFall = 2 * (percisionNoFall * recallNoFall) / (percisionNoFall + recallNoFall);
+
+                        summary.AppendLine(l + "," + correctly_classified + "," + incorrectly_classified + "," 
+                            + percisionFall + "," + recallFall + "," + f1_score_fall + ","
+                            + percisionNoFall + "," + recallNoFall + "," + f1_score_noFall);
+
+                        matrix.AppendLine("Confusion Matrix Iteration" + i);
+                        matrix.AppendLine("Fall, No Fall,<-Classified As");
+                        matrix.AppendLine(fallTP + "," + noFallFP + ",Fall=Fall");
+                        matrix.AppendLine(fallFP + "," + noFallTP + ",No Fall=No Fall");
+                        matrix.AppendLine();
+                    }
                     string summaryPath = newFolder + "/" + i + "/summary" + i + ".csv";
                     File.AppendAllText(summaryPath, summary.ToString());
+
+                    string matrixPath = newFolder + "/" + i + "/confusion_matrix" + i + ".csv";
+                    File.AppendAllText(matrixPath, matrix.ToString());
                 }
-
-
             }
 
 
@@ -206,14 +224,14 @@ namespace FallDetectionSystemDataProcessor
                     // which coses wrong format exception when being converted
                     for (int i = 0; i < numbers.Length; i++)
                     {
-                        if (numbers[i].Contains("0-")|| numbers[i].Contains("1-"))
+                        if (numbers[i].Contains("0-") || numbers[i].Contains("1-"))
                         {
                             numbers[i] = numbers[i].Remove(0, 1);
 
                         }
-                        else if (Convert.ToDouble(numbers[i]) >=10 && i <64 && numbers[66]=="1")
+                        else if (Convert.ToDouble(numbers[i]) >= 10 && i < 64 && numbers[66] == "1")
                         {
-                            numbers[i] = (Convert.ToDouble(numbers[i]) -10.0).ToString();
+                            numbers[i] = (Convert.ToDouble(numbers[i]) - 10.0).ToString();
                         }
                     }
                     // Convert string to an array of double 
