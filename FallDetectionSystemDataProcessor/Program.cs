@@ -16,7 +16,7 @@ namespace FallDetectionSystemDataProcessor
         {
             // Directory contians all raw data files FOR TRAINING
 
-            string baseDir = "C:/Users/n/Desktop/";
+            string baseDir = "C:/Users/johnn/Desktop/";
             string trainDir = baseDir + "TrainingData/Train";
             string testDir = baseDir + "TrainingData/TestDataSet";
             //string resDir = baseDir + "TrainingData/TestDataSet/ResultDatasets/";

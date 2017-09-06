@@ -14,7 +14,7 @@ namespace FallDetectionSystemDataProcessor
                         "Head_Vel_Y_3,HipCenter_Vel_Y_3,Head2FloorDist_3," +
                         "Head_Vel_Y_4,HipCenter_Vel_Y_4,Head2FloorDist_4," +
                         "Head_Vel_Y_5,HipCenter_Vel_Y_5,Head2FloorDist_5," +
-                        "Head_Vel_Y_6,HipCenter_Vel_Y_6,Head2FloorDist_1,Class";
+                        "Head_Vel_Y_6,HipCenter_Vel_Y_6,Head2FloorDist_6,Class";
         private string columns10 = "Head_Vel_Y_1,HipCenter_Vel_Y_1,Head2FloorDist_1," +
                 "Head_Vel_Y_2,HipCenter_Vel_Y_2,Head2FloorDist_2," +
                 "Head_Vel_Y_3,HipCenter_Vel_Y_3,Head2FloorDist_3,Class";
@@ -133,6 +133,11 @@ namespace FallDetectionSystemDataProcessor
             res[3] = builder20.ToString();
             res[4] = builder20.ToString();
             return res;
+        }
+
+        public int getID()
+        {
+            return 4;
         }
     }
 }
