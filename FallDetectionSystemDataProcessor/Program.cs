@@ -23,8 +23,9 @@ namespace FallDetectionSystemDataProcessor
 
             ArrayList featuresExtractors = new ArrayList();
             //featuresExtractors.Add(new FeatureExtractor1());
-            featuresExtractors.Add(new FeatureExtractor2());
+            //featuresExtractors.Add(new FeatureExtractor2());
             //featuresExtractors.Add(new FeatureExtractor3());
+            featuresExtractors.Add(new FeatureExtractor4());
 
             foreach (IRawDataExtractor extractor in featuresExtractors)
             {
