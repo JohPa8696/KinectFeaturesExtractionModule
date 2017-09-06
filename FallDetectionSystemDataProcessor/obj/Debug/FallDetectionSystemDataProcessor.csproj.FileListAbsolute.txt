@@ -63,3 +63,10 @@ C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProc
 C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\tr\ZedGraph.resources.dll
 C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\zh-cn\ZedGraph.resources.dll
 C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\zh-tw\ZedGraph.resources.dll
+C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\Accord.Controls.xml
+C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\Accord.IO.xml
+C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\Accord.MachineLearning.xml
+C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\Accord.Math.xml
+C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\Accord.Math.Core.xml
+C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\Accord.Statistics.xml
+C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\ZedGraph.xml
