@@ -31,7 +31,7 @@ namespace FallDetectionSystemDataProcessor
                 double timeDiff = (previousRow[64] - currentRow[64]);
 
                 featureValues.Add(previousRow[1] - currentRow[1]); // HEAD Y Pre 
-
+                featureValues.Add(currentRow[66]); // class label
                 // convert the double array to string
                 string s = "";
                 foreach (double fl in featureValues)

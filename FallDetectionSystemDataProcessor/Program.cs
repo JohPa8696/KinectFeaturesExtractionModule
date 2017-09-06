@@ -16,7 +16,7 @@ namespace FallDetectionSystemDataProcessor
         {
             // Directory contians all raw data files FOR TRAINING
 
-            string baseDir = "C:/Users/johnn/Desktop/";
+            string baseDir = "C:/Users/n/Desktop/";
             string trainDir = baseDir + "TrainingData/Train";
             string testDir = baseDir + "TrainingData/TestDataSet";
             //string resDir = baseDir + "TrainingData/TestDataSet/ResultDatasets/";
@@ -30,6 +30,7 @@ namespace FallDetectionSystemDataProcessor
             featuresExtractors.Add(new FeatureExtractor3());
             //featuresExtractors.Add(new FeatureExtractor11());
             featuresExtractors.Add(new FeatureExtractor4());
+
 
 
 
@@ -113,7 +114,7 @@ namespace FallDetectionSystemDataProcessor
 
                     StringBuilder matrix = new StringBuilder();
 
-                    for (int l = 0; l < 10; l++)
+                    for (int l = 0; l < 1; l++)
                     {
                         SVMEvaluator svm = null;
                         SVMEvaluator test = null;
@@ -175,7 +176,7 @@ namespace FallDetectionSystemDataProcessor
                         double incorrectly_classified = (double)(fallFP + noFallFP) / (double)(noFallTP + noFallFP + fallTP + fallFP);
 
                         double percisionFall = (double)fallTP / (double)(fallTP + fallFP);
-                        double recallFall = (double)fallTP / (double)(fallTP + noFallTP);
+                        double recallFall = (double)fallTP / (double)(fallTP + noFallFP);
                         double f1_score_fall = 2 * (percisionFall * recallFall) / (percisionFall + recallFall);
 
                         double percisionNoFall = (double)noFallTP / (double)(noFallTP + noFallFP);
