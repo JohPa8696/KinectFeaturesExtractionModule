@@ -9,7 +9,7 @@ namespace FallDetectionSystemDataProcessor
 {
     class FeatureExtractor11 : IRawDataExtractor
     {
-        private string columns = "Head_Y_Vel";
+        private string columns = "Head_Y_Vel,Class";
         public static int ID = 11;
 
         public string getColumns()
@@ -31,7 +31,7 @@ namespace FallDetectionSystemDataProcessor
                 double timeDiff = (previousRow[64] - currentRow[64]);
 
                 featureValues.Add(previousRow[1] - currentRow[1]); // HEAD Y Pre 
-
+                featureValues.Add(currentRow[66]); // class label
                 // convert the double array to string
                 string s = "";
                 foreach (double fl in featureValues)
@@ -86,7 +86,7 @@ namespace FallDetectionSystemDataProcessor
 
         public int getID()
         {
-            throw new NotImplementedException();
+            return 11;
         }
 
         public string getColumns(int windowSize)

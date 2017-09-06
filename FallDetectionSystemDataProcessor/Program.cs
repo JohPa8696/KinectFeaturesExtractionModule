@@ -25,11 +25,7 @@ namespace FallDetectionSystemDataProcessor
             string[] testFileEntries = Directory.GetFiles(testDir);
 
             ArrayList featuresExtractors = new ArrayList();
-            featuresExtractors.Add(new FeatureExtractor1());
-            featuresExtractors.Add(new FeatureExtractor2());
-            featuresExtractors.Add(new FeatureExtractor3());
-
-
+            featuresExtractors.Add(new FeatureExtractor11());
 
             foreach (IRawDataExtractor extractor in featuresExtractors)
             {
@@ -111,7 +107,7 @@ namespace FallDetectionSystemDataProcessor
 
                     StringBuilder matrix = new StringBuilder();
 
-                    for (int l = 0; l < 10; l++)
+                    for (int l = 0; l < 1; l++)
                     {
                         SVMEvaluator svm = null;
                         SVMEvaluator test = null;
