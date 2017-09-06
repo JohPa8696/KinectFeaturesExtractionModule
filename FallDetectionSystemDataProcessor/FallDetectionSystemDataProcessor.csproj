@@ -85,9 +85,11 @@
     <Compile Include="FeatureExtractor4.cs" />
     <Compile Include="FeatureExtractor5.cs" />
     <Compile Include="FeatureExtractor6.cs" />
+    <Compile Include="NaiveBayesEvaluator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IRawDataExtractor.cs" />
+    <Compile Include="RandomForestEvaluator.cs" />
     <Compile Include="SVMEvaluator.cs" />
   </ItemGroup>
   <ItemGroup>

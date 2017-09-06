@@ -26,12 +26,12 @@ namespace FallDetectionSystemDataProcessor
 
             ArrayList featuresExtractors = new ArrayList();
 
-            //featuresExtractors.Add(new FeatureExtractor1());
-            //featuresExtractors.Add(new FeatureExtractor2());
-            //featuresExtractors.Add(new FeatureExtractor3());
-            //featuresExtractors.Add(new FeatureExtractor11());
-            //featuresExtractors.Add(new FeatureExtractor4());
-            //featuresExtractors.Add(new FeatureExtractor5());
+            featuresExtractors.Add(new FeatureExtractor1());
+            featuresExtractors.Add(new FeatureExtractor2());
+            featuresExtractors.Add(new FeatureExtractor3());
+            featuresExtractors.Add(new FeatureExtractor11());
+            featuresExtractors.Add(new FeatureExtractor4());
+            featuresExtractors.Add(new FeatureExtractor5());
             featuresExtractors.Add(new FeatureExtractor6());
 
 
@@ -133,20 +133,30 @@ namespace FallDetectionSystemDataProcessor
                         SVMEvaluator svm = null;
                         SVMEvaluator test = null;
 
+                        RandomForestEvaluator rf = null;
+                        RandomForestEvaluator rftest = null;
+
                         foreach (string filename in Directory.GetFiles(folder))
                         {
                             if (filename.Contains("train"))
                             {
-                                svm = new SVMEvaluator(filename);
-                                svm.buildModel();
+                                //svm = new SVMEvaluator(filename);
+                                //svm.buildModel();
+
+                                rf = new RandomForestEvaluator(filename);
+                                rf.buildModel();
                             }
                             else if(filename.Contains("test"))
                             {
                                 test = new SVMEvaluator(filename);
+                                rftest = new RandomForestEvaluator(filename);
                                 //Console.Write(test.outputs);
                             }
                         }
-                        bool[] results = svm.classify(test.inputs);
+
+                        //bool[] results = svm.classify(test.inputs);
+                        bool[] results = rf.classify(test.inputs);
+
 
                         StringBuilder output = new StringBuilder();
                         output.AppendLine("Actual,Classified As");
@@ -180,11 +190,11 @@ namespace FallDetectionSystemDataProcessor
                                     noFallFP++;
                                 }
                             }
-                            //output.AppendLine(j + "," + ToInt(results[count]));
+                            output.AppendLine(j + "," + ToInt(results[count]));
                             count++;
                         }
                         string outputPath = newFolder + "/" + i + "/output" + l + ".csv";
-                        //File.AppendAllText(outputPath, output.ToString());
+                        File.AppendAllText(outputPath, output.ToString());
 
                         double correctly_classified = (double)(fallTP + noFallTP) / (double)(noFallTP + noFallFP + fallTP + fallFP);
                         double incorrectly_classified = (double)(fallFP + noFallFP) / (double)(noFallTP + noFallFP + fallTP + fallFP);
