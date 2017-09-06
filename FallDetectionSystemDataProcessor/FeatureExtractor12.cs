@@ -18,12 +18,12 @@ namespace FallDetectionSystemDataProcessor
 
         public string getColumns(int windowSize)
         {
-            throw new NotImplementedException();
+            return columns;
         }
 
         public int getID()
         {
-            throw new NotImplementedException();
+            return 12;
         }
 
         public string[] process(List<double[]> data)

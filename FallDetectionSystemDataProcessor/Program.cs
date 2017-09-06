@@ -28,11 +28,8 @@ namespace FallDetectionSystemDataProcessor
             featuresExtractors.Add(new FeatureExtractor1());
             featuresExtractors.Add(new FeatureExtractor2());
             featuresExtractors.Add(new FeatureExtractor3());
-            //featuresExtractors.Add(new FeatureExtractor11());
             featuresExtractors.Add(new FeatureExtractor4());
-
-
-
+            featuresExtractors.Add(new FeatureExtractor11());
 
             foreach (IRawDataExtractor extractor in featuresExtractors)
             {
@@ -105,6 +102,19 @@ namespace FallDetectionSystemDataProcessor
                     testBuilders[i / 5 - 1].Clear();
                 }
 
+                String o_correctly_classified ="";
+                String o_incorrectly_classified = "";
+
+                String o_percisionFall = "";
+                String o_recallFall = "";
+                String o_f1_score_fall = "";
+
+                String o_percisionNoFall = "";
+                String o_recallNoFall = "";
+                String o_f1_score_noFall = "";
+
+                int index = 0;
+
                 for (int i = 5; i < 30; i += 5)
                 {
                     string folder = newFolder + "/" + i;
@@ -166,11 +176,11 @@ namespace FallDetectionSystemDataProcessor
                                     noFallFP++;
                                 }
                             }
-                            output.AppendLine(j + "," + ToInt(results[count]));
+                            //output.AppendLine(j + "," + ToInt(results[count]));
                             count++;
                         }
                         string outputPath = newFolder + "/" + i + "/output" + l + ".csv";
-                        File.AppendAllText(outputPath, output.ToString());
+                        //File.AppendAllText(outputPath, output.ToString());
 
                         double correctly_classified = (double)(fallTP + noFallTP) / (double)(noFallTP + noFallFP + fallTP + fallFP);
                         double incorrectly_classified = (double)(fallFP + noFallFP) / (double)(noFallTP + noFallFP + fallTP + fallFP);
@@ -187,6 +197,33 @@ namespace FallDetectionSystemDataProcessor
                             + percisionFall + "," + recallFall + "," + f1_score_fall + ","
                             + percisionNoFall + "," + recallNoFall + "," + f1_score_noFall);
 
+                        if (index < 4)
+                        {
+                            o_correctly_classified += correctly_classified + ",";
+                            o_incorrectly_classified += incorrectly_classified + ",";
+
+                            o_percisionFall += percisionFall + ",";
+                            o_recallFall += recallFall + ",";
+                            o_f1_score_fall += f1_score_fall + ",";
+
+                            o_percisionNoFall += percisionNoFall + ",";
+                            o_recallNoFall += recallNoFall + ",";
+                            o_f1_score_noFall += f1_score_noFall + ",";
+                        }else
+                        {
+                            o_correctly_classified += correctly_classified;
+                            o_incorrectly_classified += incorrectly_classified;
+
+                            o_percisionFall += percisionFall;
+                            o_recallFall += recallFall;
+                            o_f1_score_fall += f1_score_fall;
+
+                            o_percisionNoFall += percisionNoFall;
+                            o_recallNoFall += recallNoFall;
+                            o_f1_score_noFall += f1_score_noFall;
+                        }
+                        
+                        index++;
                         matrix.AppendLine("Confusion Matrix Iteration" + i);
                         matrix.AppendLine("Fall, No Fall,<-Classified As");
                         matrix.AppendLine(fallTP + "," + noFallFP + ",Fall=Fall");
@@ -199,6 +236,21 @@ namespace FallDetectionSystemDataProcessor
                     string matrixPath = newFolder + "/" + i + "/confusion_matrix" + i + ".csv";
                     File.AppendAllText(matrixPath, matrix.ToString());
                 }
+                StringBuilder final_output = new StringBuilder();
+                final_output.AppendLine("Evaluation");
+                final_output.AppendLine(",5,10,15,20,25,<-window size");
+
+                final_output.AppendLine("Correctly Classified," + o_correctly_classified);
+                final_output.AppendLine("Incorectly Classified," + o_incorrectly_classified);
+                final_output.AppendLine("Percision Fall," + o_percisionFall);
+                final_output.AppendLine("Recall Fall," + o_recallFall);
+                final_output.AppendLine("F1 Score Fall," + o_f1_score_fall);
+                final_output.AppendLine("Percision No Fall," + o_percisionNoFall);
+                final_output.AppendLine("Recall No Fall," + o_recallNoFall);
+                final_output.AppendLine("F1 Score No Fall," + o_f1_score_noFall);
+
+                string finOutPath = newFolder + "/final_output.csv";
+                File.AppendAllText(finOutPath, final_output.ToString());
             }
 
 
