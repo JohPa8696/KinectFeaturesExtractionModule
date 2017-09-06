@@ -129,6 +129,7 @@ namespace FallDetectionSystemDataProcessor
             StringBuilder builder15 = new StringBuilder();
             StringBuilder builder20 = new StringBuilder();
             StringBuilder builder25 = new StringBuilder();
+
             for (int i=2; i< extractedData.Count; i++)
             {
                 if (i >= 2 && i < 27)
@@ -152,6 +153,7 @@ namespace FallDetectionSystemDataProcessor
                     builder5.AppendLine(extractedData[i]);
                 }
             }
+
             string[] res = { builder5.ToString(), builder10.ToString(), builder15.ToString(), builder20.ToString(), builder25.ToString() };
             return res;
         }
