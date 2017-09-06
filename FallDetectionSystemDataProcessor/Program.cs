@@ -23,7 +23,7 @@ namespace FallDetectionSystemDataProcessor
 
             ArrayList featuresExtractors = new ArrayList();
             featuresExtractors.Add(new FeatureExtractor1());
-            //featuresExtractors.Add(new FeatureExtractor2());
+            featuresExtractors.Add(new FeatureExtractor2());
             //featuresExtractors.Add(new FeatureExtractor3());
 
             foreach (IRawDataExtractor extractor in featuresExtractors)
@@ -53,11 +53,11 @@ namespace FallDetectionSystemDataProcessor
                 // Write the result to a csv file
                 for(int i =5; i<30; i += 5)
                 {
-                    string trainingsetPath = Directory.GetCurrentDirectory() + "/trainingset"+i+".csv";
+                    string trainingsetPath = Directory.GetCurrentDirectory() + "/" + extractor.GetType().ToString() + "_trainingset" + i +".csv";
                     int counter = 0;
                     while (File.Exists(trainingsetPath))
                     {
-                        trainingsetPath = Directory.GetCurrentDirectory() + "/trainingset" + i + "_" + counter + ".csv";
+                        trainingsetPath = Directory.GetCurrentDirectory() +"/" +extractor.GetType().ToString()+"_trainingset" + i + "_" + counter + ".csv";
                         counter++;
                     }
                     // write data to file
@@ -80,11 +80,11 @@ namespace FallDetectionSystemDataProcessor
                 // test set
                 for (int i = 5; i < 30; i += 5)
                 {
-                    string testsetPath = Directory.GetCurrentDirectory() + "/testset" + i + ".csv";
+                    string testsetPath = Directory.GetCurrentDirectory() + "/" + extractor.GetType().ToString() + "_testset" + i + ".csv";
                     int counter = 0;
                     while (File.Exists(testsetPath))
                     {
-                        testsetPath = Directory.GetCurrentDirectory() + "/testset" + i + "_" + counter + ".csv";
+                        testsetPath = Directory.GetCurrentDirectory() + "/" + extractor.GetType().ToString() + "_testset" + i + "_" + counter + ".csv";
                         counter++;
                     }
                     // write data to file
