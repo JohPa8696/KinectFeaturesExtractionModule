@@ -136,6 +136,9 @@ namespace FallDetectionSystemDataProcessor
                         RandomForestEvaluator rf = null;
                         RandomForestEvaluator rftest = null;
 
+                        NaiveBayesEvaluator nb = null;
+                        NaiveBayesEvaluator nbTest = null;
+
                         foreach (string filename in Directory.GetFiles(folder))
                         {
                             if (filename.Contains("train"))
@@ -143,20 +146,21 @@ namespace FallDetectionSystemDataProcessor
                                 //svm = new SVMEvaluator(filename);
                                 //svm.buildModel();
 
-                                rf = new RandomForestEvaluator(filename);
-                                rf.buildModel();
+                                //rf = new RandomForestEvaluator(filename);
+                                //rf.buildModel();
+
+                                nb = new NaiveBayesEvaluator(filename);
+                                nb.buildModel();
                             }
                             else if(filename.Contains("test"))
                             {
                                 test = new SVMEvaluator(filename);
-                                rftest = new RandomForestEvaluator(filename);
-                                //Console.Write(test.outputs);
                             }
                         }
 
                         //bool[] results = svm.classify(test.inputs);
-                        bool[] results = rf.classify(test.inputs);
-
+                        //bool[] results = rf.classify(test.inputs);
+                        bool[] results = nb.classify(test.inputs);
 
                         StringBuilder output = new StringBuilder();
                         output.AppendLine("Actual,Classified As");

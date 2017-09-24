@@ -1,6 +1,6 @@
-﻿using Accord.MachineLearning.VectorMachines.Learning;
+﻿using Accord.MachineLearning.Bayes;
 using Accord.Math;
-using Accord.Statistics.Kernels;
+using Accord.Statistics.Distributions.Univariate;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,15 +11,13 @@ using System.Threading.Tasks;
 
 namespace FallDetectionSystemDataProcessor
 {
-    class SVMEvaluator
+    class NaiveBayesEvaluator
     {
-        public string fileLocation;
-        public Accord.MachineLearning.VectorMachines.SupportVectorMachine<Gaussian> svmModel { get; set; }
+        NaiveBayes<NormalDistribution> nb;
         public double[][] inputs { get; set; }
         public int[] outputs { get; set; }
-        List<double> data;
 
-        public SVMEvaluator(string fileLocation)
+        public NaiveBayesEvaluator(string fileLocation)
         {
             // Read the Excel worksheet into a DataTable    
             //DataTable table = new ExcelReader(fileLocation).GetWorksheet("Sheet1");
@@ -79,33 +77,45 @@ namespace FallDetectionSystemDataProcessor
 
             this.inputs = table.ToJagged<double>(features);
             this.outputs = table.Columns["Class"].ToArray<int>();
-            //ScatterplotBox.Show("Fall non fall", inputs, outputs).Hold();
+
+            /*
+            for(int i = 0; i < outputs.Length; i++)
+            {
+                if (outputs[i] == 0)
+                {
+                    outputs[i] = -1;
+                }
+            }*/
         }
 
-
-        public Accord.MachineLearning.VectorMachines.SupportVectorMachine<Gaussian> buildModel()
+        public void buildModel()
         {
-            // Create a new Sequential Minimal Optimization (SMO) learning 
-            // algorithm and estimate the complexity parameter C from data
-            var teacher = new SequentialMinimalOptimization<Gaussian>()
-            {
-                UseComplexityHeuristic = true,
-                UseKernelEstimation = true // estimate the kernel from the data
-            };
+            // Now, let's create the forest learning algorithm
+            var teacher = new NaiveBayesLearning<NormalDistribution>();
 
-            this.svmModel = teacher.Learn(inputs, outputs);
-            return svmModel;
+            // Finally, learn a random forest from data
+            this.nb = teacher.Learn(inputs, outputs);
+
         }
 
-        public bool[] classify(double[][] inputs)
+        public bool[] classify(double[][] oinputs)
         {
-            bool[] answers = null;
-            if (svmModel != null)
+            // We can estimate class labels using
+            int[] predicted = nb.Decide(oinputs);
+            bool[] answers = new bool[predicted.Length];
+
+            for (int i = 0; i < predicted.Length; i++)
             {
-                answers = svmModel.Decide(inputs);
+                if (predicted[i] == 0)
+                {
+                    answers[i] = false;
+                }
+                else
+                {
+                    answers[i] = true;
+                }
             }
             return answers;
         }
-
     }
 }

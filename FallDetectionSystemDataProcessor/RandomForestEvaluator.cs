@@ -41,7 +41,7 @@ namespace FallDetectionSystemDataProcessor
                     if (rowCount == 0)
                     {
                         columnNames = featureVector;
-                        vectorLength = featureVector.Length;
+                        vectorLength = featureVector.Length-1;
                         foreach (string columnHeader in columnNames)
                         {
                             DataColumn column = new DataColumn(columnHeader.ToUpper(), typeof(string));

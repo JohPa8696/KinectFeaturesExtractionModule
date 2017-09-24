@@ -70,3 +70,6 @@ C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProc
 C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\Accord.Math.Core.xml
 C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\Accord.Statistics.xml
 C:\Users\johnn\documents\visual studio 2015\Projects\FallDetectionSystemDataProcessor\FallDetectionSystemDataProcessor\bin\Debug\ZedGraph.xml
+C:\Users\n\Desktop\700\Evaluation\FallDetectionSystemDataProcessor\bin\Debug\FallDetectionSystemDataProcessor.exe.config
+C:\Users\n\Desktop\700\Evaluation\FallDetectionSystemDataProcessor\obj\Debug\FallDetectionSystemDataProcessor.exe
+C:\Users\n\Desktop\700\Evaluation\FallDetectionSystemDataProcessor\obj\Debug\FallDetectionSystemDataProcessor.pdb
